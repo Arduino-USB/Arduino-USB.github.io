@@ -3,8 +3,11 @@ let socket = new WebSocket("ws://localhost:1234/");
 socket.onopen = function(e) {
   alert("[open] Connection established");
   alert("Sending to server");
-  let cmd = window.prompt("Enter your command: ");
-  socket.send(cmd);
+  while (true){
+     let cmd = window.prompt("Enter your command: ");
+     socket.send(cmd);
+  }
+  
 };
 
 socket.onmessage = function(event) {
