@@ -1,4 +1,4 @@
-var WebSocketServer = require('ws').Server;   // webSocket library
+let socket = new WebSocket("ws://localhost:1234/");
 
 // configure the webSocket server:
 const wssPort = process.env.PORT || 8080;             // port number for the webSocket server
