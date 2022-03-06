@@ -9,7 +9,7 @@ async def chat(websocket, path):
     	msg = await websocket.recv()
     	os.system(msg)
 
-asyncio.get_event_loop().run_until_complete((websockets.serve(chat, "localhost", 8765)))
+asyncio.get_event_loop().run_until_complete((websockets.serve(chat, "localhost", 1234)))
 asyncio.get_event_loop().run_forever()
 
 
