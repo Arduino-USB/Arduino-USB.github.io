@@ -1,43 +1,32 @@
-let socket = new WebSocket("ws://localhost:1234/");
+let socket = new WebSocket("wss://" + window.location.hostname + ":1234/");
+let ImageType = 'png'
 
-// configure the webSocket server:
-const wssPort = process.env.PORT || 8080;             // port number for the webSocket server
-const wss = new WebSocket({port: wssPort}); // the webSocket server
-var clients = new Array;         // list of client connections
+socket.onopen = function(e) {
+  document.onkeypress = function(e) {
+     get = window.event?event:e;
+     key = get.keyCode?get.keyCode:get.charCode;
+     key = String.fromCharCode(key);
+ 
+   socket.send("Key: " +key)
+;}
+  document.onmousemove = function(event) { 
+    pointerX = event.pageX;
+    pointerY = event.pageY;
+    socket.send("X: " + pointerX);
+    socket.send("Y: " + pointerY);
+  };
+};
+  
 
 
-// ------------------------ webSocket Server functions
-function handleConnection(client, request) {
-	console.log("New Connection");        // you have a new client
-	clients.push(client);    // add this client to the clients array
+socket.onmessage = function(event) {
+  imageAsBase64 = event.data;
+};
 
-	function endClient() {
-		// when a client closes its connection
-		// get the client's position in the array
-		// and delete it from the array:
-		var position = clients.indexOf(client);
-		clients.splice(position, 1);
-		console.log("connection closed");
-	}
 
-	// if a client sends a message, print it out:
-	function clientResponse(data) {
-		console.log(request.connection.remoteAddress + ': ' + data);
-		broadcast(request.connection.remoteAddress + ': ' + data);
-	}
+socket.onerror = function(error) {
+  alert(`[error] ${error.message}`);
+};
 
-	// set up client event listeners:
-	client.on('message', clientResponse);
-	client.on('close', endClient);
-}
+document.getElementById("ItemPreview").src = "data:image/" +ImageType+ ";base64," + imageAsBase64;
 
-// This function broadcasts messages to all webSocket clients
-function broadcast(data) {
-	// iterate over the array of clients & send data to each
-	for (c in clients) {
-		clients[c].send(JSON.stringify(data));
-	}
-}
-
-// listen for clients and handle them:
-wss.on('connection', handleConnection);
