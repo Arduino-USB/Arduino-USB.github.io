@@ -1,0 +1,10 @@
+body{
+  background: black;
+}
+
+p{
+  float: left;
+  margin: 60px;
+  font-size: 30px;
+  color: white;
+}
