@@ -8,3 +8,10 @@ p{
   font-size: 30px;
   color: white;
 }
+.player{
+  background-image: url("player.png");
+  width: 20px;
+  height: 60px;
+
+
+}
