@@ -1,0 +1,6 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\Software\Classes\ms-settings]
+@="URL:ms-settings"
+"URL protocol"=dword:00000000
+
